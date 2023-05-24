@@ -8,7 +8,7 @@
 
 1. some common genome analysis tools, Including but no limited to: `hisat2`, `samtools`, `htseq-count`, `bamtools`, `bam2fastx`, `R`,`multiqc`. see [tools] section in configs/mm10.config file to find more information.   
 
-2. It is highly recommended to use `mamba install your-tool-name` to install dependcies. Conda envioments cound be mamaged by [Mamba](https://github.com/conda-forge/miniforge) that could save your time.
+2. It is highly recommended to use `mamba install your-tool-name` to install dependcies. Conda envioments cound be managed by [Mamba](https://github.com/conda-forge/miniforge) that could save your time.
 If you are in China mainland, try to use the local anaconda mirrors. Here is an example using [the mirrors of Tsinghua University](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/).
 ```shell
 channels:
@@ -33,7 +33,7 @@ custom_channels:
 `$mamba install -c conda-forge R=4.0 perl biopython`
 
 
-The installation of parts of tools may meet some problem, for these, they could be installed by `pip` package manager. 
+The installation of parts of tools may meet some problems, for these, they could be installed by `pip` package manager. 
 
 
 3. Some R packages and perl module `JSON` are required
