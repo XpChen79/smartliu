@@ -1,25 +1,54 @@
-## An in-house Command Line Interface to process tag-based scRNA-Seq data.
+# An in-house Command Line Interface to process tag-based scRNA-Seq data.
 
-### Installation  
-download this package and unzip it.   
-`$cd path-to-smartliu`   
-`$pip install --editable .`   
-### Prerequisite
+
+## Installation  
+  
+
+### Dependence
+
 1. some common genome analysis tools, Including but no limited to: `hisat2`, `samtools`, `htseq-count`, `bamtools`, `bam2fastx`, `R`,`multiqc`. see [tools] section in configs/mm10.config file to find more information.   
 
-2. It is highly recommended to use `conda install your-tool-name` to install dependcies.   
-If you are in China, try to use the local anaconda and bioconda mirrors. It will save your time very much.
+2. It is highly recommended to use `mamba install your-tool-name` to install dependcies. Conda envioments cound be mamaged by [Mamba](https://github.com/conda-forge/miniforge) that could save your time.
+If you are in China mainland, try to use the local anaconda mirrors. Here is an example using [the mirrors of Tsinghua University](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/).
 ```shell
-# see https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
-
-$conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-$conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-$conda config --set show_channel_urls yes
-$conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 ```
-`$conda install fastqc cutadapt hisat2 samtools htseq-count bam2fastx bamtools R perl multiqc`
 
-3. genome and trancscriptome index files build by hisat2-build   
+`$mamba install -c bioconda fastqc cutadapt hisat2 samtools htseq bam2fastx bamtools multiqc`
+
+`$mamba install -c conda-forge R=4.0 perl biopython`
+
+
+The installation of parts of tools may meet some problem, for these, they could be installed by `pip` package manager. 
+
+
+3. Some R packages and perl module `JSON` are required
+```
+ # For JSON.pm used in scripts/paired2single.pl 
+cpanm install JSON
+## It could be also installed by mamba if you get some problems from `cpanm`
+mamba install -c bioconda perl-json
+
+# For R packages used in scripts/*.R
+r_packages <- ("rjson", "rtracklayer", "mixtools", "ggplot2", "reshape2", "ggthemr", "gridExtra")
+# You may use BiocManager::install(r_packages) to install them
+```
+
+4. genome and trancscriptome index files build by hisat2-build   
 Ensembl http://www.ensembl.org/info/data/ftp/index.html
 Gencode http://www.gencodegenes.org/
 - get genome fasta sequence   
@@ -57,20 +86,17 @@ $extract_exons.py transcripts.gtf > transcripts.exon
 $hisat2-build -p 30 --ss transcripts.ss --exon transcripts.exon genome.fa genome.trans
 ```
 
+### Install  
+`$git clone 'Repository Address'`  
+`$cd smartliu`  
+`$pip install .`
+ 
 
-# Depends
+## Test
 Please use test_data to ensure everything is OK.  eg.   `smartliu -c mm10 -i test_data -o smart_mm10`
 
-!!! You may encountered some errors, follow the log info to install dependented R and Perl packages.
 
-```
- # For JSON.pm used in scripts/paired2single.pl 
-cpanm install JSON
-# For R packages used in scripts/*.R
-r_packages <- ("rjson", "rtracklayer", "mixtools", "ggplot2", "reshape2", "ggthemr", "gridExtra")
-# You may use BiocManager::install(r_packages) to install them
-```
 
-# Usage
+## Usage
 
 Use `smartliu --help` to see how to start    
